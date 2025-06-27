@@ -70,9 +70,9 @@ const ImageUploadField = ({
       return false;
     }
     
-    const maxSize = 5 * 1024 * 1024;
+    const maxSize = 10 * 1024 * 1024;
     if (file.size > maxSize) {
-      setUploadError('File is too large. Maximum size is 5MB.');
+      setUploadError('File is too large. Maximum size is 15MB.');
       return false;
     }
     
