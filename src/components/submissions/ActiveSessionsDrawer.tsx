@@ -356,17 +356,6 @@ const ActiveSessionsDrawer: React.FC<ActiveSessionsDrawerProps> = ({ isOpen, onC
                       : `${filteredSessions.length} ${showUnclaimedSessions ? 'unclaimed' : 'active'} session${filteredSessions.length !== 1 ? 's' : ''}`}
                   </p>
                   <Button
-                variant="primary"
-                size="sm"
-                onClick={toggleSelectionMode}
-                icon={isSelectionMode ? <ClipboardList size={14} /> : <PlusCircle size={14} />}
-                className={isSelectionMode ? "bg-gray-600 hover:bg-gray-700" : "bg-green-600 hover:bg-green-700"}
-                testId="new-session-toggle-button"
-              >
-                {isSelectionMode ? "View Sessions" : "New"}
-             
-              </button>
-                  <Button
                     variant="outline"
                     size="sm"
                     onClick={loadActiveSessions}
