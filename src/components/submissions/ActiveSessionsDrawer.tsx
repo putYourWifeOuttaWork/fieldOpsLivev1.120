@@ -364,13 +364,7 @@ const ActiveSessionsDrawer: React.FC<ActiveSessionsDrawerProps> = ({ isOpen, onC
                 testId="new-session-toggle-button"
               >
                 {isSelectionMode ? "View Sessions" : "New"}
-              </Button>
-              <button
-                onClick={onClose}
-                className="text-gray-500 hover:text-gray-700"
-                aria-label="Close drawer"
-              >
-                <X size={20} />
+             
               </button>
                   <Button
                     variant="outline"
