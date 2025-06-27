@@ -1,19 +1,19 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ClipboardList, Clock, User, BarChart4, X, ChevronRight, Users, Hash, PlusCircle, FileText, Hand, Plus } from 'lucide-react';
-import Button from '../../components/common/Button';
-import Input from '../../components/common/Input';
-import Modal from '../../components/common/Modal';
-import { useSessionStore } from '../stores/sessionStore';
-import { usePilotProgramStore } from '../stores/pilotProgramStore';
-import sessionManager from '../lib/sessionManager';
+import Button from '../common/Button';
+import Input from '../common/Input';
+import Modal from '../common/Modal';
+import { useSessionStore } from '../../stores/sessionStore';
+import { usePilotProgramStore } from '../../stores/pilotProgramStore';
+import sessionManager from '../../lib/sessionManager';
 import { formatDistanceToNow } from 'date-fns';
-import { supabase } from '../lib/supabaseClient';
+import { supabase } from '../../lib/supabaseClient';
 import SessionProgress from './SessionProgress';
 import { toast } from 'react-toastify';
-import usePilotPrograms from '../hooks/usePilotPrograms';
-import { useSites } from '../hooks/useSites';
-import SkeletonLoader, { SkeletonCard } from '../../components/common/SkeletonLoader';
+import usePilotPrograms from '../../hooks/usePilotPrograms';
+import { useSites } from '../../hooks/useSites';
+import SkeletonLoader, { SkeletonCard } from '../common/SkeletonLoader';
 
 interface ActiveSessionsDrawerProps {
   isOpen: boolean;
