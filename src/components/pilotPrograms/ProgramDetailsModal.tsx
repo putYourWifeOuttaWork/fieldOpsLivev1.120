@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Calendar, FileText, Building, Users, Edit, Trash2, History, Clock, Copy, ChevronDown, ChevronUp, Tag } from 'lucide-react';
+import { Calendar, FileText, Building, Users, Edit, Trash2, History, Clock, Copy, ChevronDown, ChevronUp, Tag, BarChart } from 'lucide-react';
 import Button from '../common/Button';
 import Input from '../common/Input';
 import Modal from '../common/Modal';
@@ -227,6 +227,12 @@ const ProgramDetailsModal = ({
     navigate(`/programs/${program.program_id}/audit-log`);
   };
 
+  // Format progress percentage
+  const formatProgress = (progress: number | undefined) => {
+    if (progress === undefined) return "N/A";
+    return `${Math.round(progress)}%`;
+  };
+
   return (
     <>
       <Modal
@@ -439,6 +445,41 @@ const ProgramDetailsModal = ({
               <div className="mb-6">
                 <p className="text-gray-700 whitespace-pre-line">{program.description}</p>
               </div>
+              
+              {/* Progress Information */}
+              {program.day_x_of_program !== undefined && program.days_count_this_program !== undefined && (
+                <div className="mb-6 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                  <h4 className="font-medium mb-2 flex items-center">
+                    <BarChart className="mr-2 h-5 w-5 text-primary-600" />
+                    Program Progress
+                  </h4>
+                  
+                  <div className="grid grid-cols-3 gap-4 mb-3">
+                    <div>
+                      <p className="text-sm text-gray-500">Total Days</p>
+                      <p className="font-medium">{program.days_count_this_program}</p>
+                    </div>
+                    
+                    <div>
+                      <p className="text-sm text-gray-500">Current Day</p>
+                      <p className="font-medium">Day {program.day_x_of_program}</p>
+                    </div>
+                    
+                    <div>
+                      <p className="text-sm text-gray-500">Completion</p>
+                      <p className="font-medium">{formatProgress(program.phase_progress)}</p>
+                    </div>
+                  </div>
+                  
+                  {/* Progress Bar */}
+                  <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                    <div 
+                      className="bg-primary-600 h-2.5 rounded-full" 
+                      style={{ width: `${program.phase_progress || 0}%` }}
+                    ></div>
+                  </div>
+                </div>
+              )}
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <div className="flex items-center">

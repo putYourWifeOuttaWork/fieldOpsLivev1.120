@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle, XCircle, Info, Copy, Tag } from 'lucide-react';
+import { CheckCircle, XCircle, Info, Copy, Tag, Clock, BarChart } from 'lucide-react';
 import Card, { CardHeader, CardContent, CardFooter } from '../common/Card';
 import Button from '../common/Button';
 import { PilotProgram } from '../../lib/types';
@@ -43,6 +43,12 @@ const PilotProgramCard = ({
   };
   
   const phaseInfo = getPhaseInfo();
+  
+  // Format the phase progress percentage
+  const formatProgress = (progress: number | undefined) => {
+    if (progress === undefined) return "N/A";
+    return `${Math.round(progress)}%`;
+  };
 
   return (
     <Card 
@@ -93,14 +99,40 @@ const PilotProgramCard = ({
         </div>
       </CardHeader>
       <CardContent testId={`program-content-${program.program_id}`}>
-        {phaseInfo && (
-          <div className="flex items-center mb-2">
-            <Tag size={14} className="text-primary-600 mr-1" />
-            <span className="text-sm font-medium">
-              Phase {phaseInfo.phaseNumber} {phaseInfo.phaseType && `(${phaseInfo.phaseType})`}
-            </span>
-          </div>
-        )}
+        {/* Program Phase and Progress Information */}
+        <div className="mb-3 space-y-2">
+          {phaseInfo && (
+            <div className="flex items-center">
+              <Tag size={14} className="text-primary-600 mr-1" />
+              <span className="text-sm font-medium">
+                Phase {phaseInfo.phaseNumber} {phaseInfo.phaseType && `(${phaseInfo.phaseType})`}
+              </span>
+            </div>
+          )}
+          
+          {/* Progress information */}
+          {program.day_x_of_program !== undefined && program.days_count_this_program !== undefined && (
+            <div>
+              <div className="flex justify-between items-center text-xs text-gray-600 mb-1">
+                <span className="flex items-center">
+                  <Clock size={12} className="mr-1" /> 
+                  Day {program.day_x_of_program} of {program.days_count_this_program}
+                </span>
+                <span className="flex items-center">
+                  <BarChart size={12} className="mr-1" />
+                  Progress: {formatProgress(program.phase_progress)}
+                </span>
+              </div>
+              {/* Progress Bar */}
+              <div className="w-full bg-gray-200 rounded-full h-1.5">
+                <div 
+                  className="bg-primary-600 h-1.5 rounded-full" 
+                  style={{ width: `${program.phase_progress || 0}%` }}
+                ></div>
+              </div>
+            </div>
+          )}
+        </div>
         
         <p className="text-gray-600 mb-4 line-clamp-3" title={program.description}>
           {program.description}

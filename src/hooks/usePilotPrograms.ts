@@ -58,8 +58,9 @@ export const usePilotPrograms = (): UsePilotProgramsResult => {
       
       logger.debug('Fetching programs for user:', user.id);
       const { data, error } = await withRetry(() => 
+        // Update to use the new view instead of the direct table
         supabase
-          .from('pilot_programs')
+          .from('pilot_programs_with_progress')
           .select('*, phases')
           .order('name')
       , 'fetchPilotPrograms');
@@ -92,8 +93,9 @@ export const usePilotPrograms = (): UsePilotProgramsResult => {
       }
       
       const { data, error } = await withRetry(() => 
+        // Update to use the new view instead of the direct table
         supabase
-          .from('pilot_programs')
+          .from('pilot_programs_with_progress')
           .select('*, phases')
           .eq('program_id', programId)
           .single()
