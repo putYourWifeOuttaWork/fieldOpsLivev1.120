@@ -190,7 +190,7 @@ const SubmissionOverviewCard: React.FC<SubmissionOverviewCardProps> = ({
   
   // Get display status - special case for Shared status
   const getDisplayStatus = () => {
-    if (!session) return "Record Inaccessible To You";
+    if (!session) return "Inaccessible To You";
     return session.session_status;
   };
 
