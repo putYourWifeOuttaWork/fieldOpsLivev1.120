@@ -26,21 +26,18 @@ export const createSubmissionSession = async (
   gasifierTemplates?: GasifierDefaults[]
 ): Promise<CreateSessionResponse> => {
   try {
-    // Convert template arrays to JSON for the database function
-    const petriTemplatesJson = petriTemplates ? JSON.stringify(petriTemplates) : null;
-    const gasifierTemplatesJson = gasifierTemplates ? JSON.stringify(gasifierTemplates) : null;
-    
+    // No need to stringify the template arrays - Supabase handles JSON conversion
     logger.debug('Creating session with templates', {
-      petriTemplates: petriTemplatesJson ? `(${petriTemplates?.length} templates)` : 'none',
-      gasifierTemplates: gasifierTemplatesJson ? `(${gasifierTemplates?.length} templates)` : 'none'
+      petriTemplates: petriTemplates ? `(${petriTemplates.length} templates)` : 'none',
+      gasifierTemplates: gasifierTemplates ? `(${gasifierTemplates.length} templates)` : 'none'
     });
     
     const { data, error } = await supabase.rpc('create_submission_session', {
       p_site_id: siteId,
       p_program_id: programId,
       p_submission_data: submissionData,
-      p_petri_templates: petriTemplatesJson,
-      p_gasifier_templates: gasifierTemplatesJson
+      p_petri_templates: petriTemplates,
+      p_gasifier_templates: gasifierTemplates
     });
 
     if (error) {
